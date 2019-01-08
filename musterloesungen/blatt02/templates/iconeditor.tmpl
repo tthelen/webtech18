@@ -1,0 +1,66 @@
+{% extends 'base.tmpl' %}
+{% set active_page = 'iconeditor' %}
+
+{% block additional_scripts %}
+    <script src="/static/validate.js"></script>
+    <script src="/static/iconeditor.js"></script>
+    <link rel="stylesheet" href="/static/iconeditor.css">
+{% endblock %}
+
+
+{% block aside %}
+<p>Vorhandene Icons:</p>
+    <ul>
+    {% for icon in icons %}
+        <li class=icon-list-item><img src='{{ icon.data }}' title='{{ icon.title }}'></li>
+    {% endfor %}
+    </ul>
+
+    <p> Modus:</p>
+    <p>
+        <img src="/static/icons8-fill-color-26.png" class="icon-mode-fill"> &nbsp;
+        <img src="/static/icons8-pencil-26.png" class="icon-mode-paint"> &nbsp;
+        <img src="/static/icons8-erase-24.png" class="icon-mode-erase">
+    </p>
+{% endblock %}
+
+{% block smallnav %}
+    <p>
+    {% for icon in icons %}
+        <span class='icon-list-item'> <img src='{{ icon.data }}' title='{{ icon.title }}'></span> &nbsp;
+    {% endfor %}
+    </p>
+    <p>
+        <img src="/static/icons8-fill-color-26.png" class="icon-mode-fill"> &nbsp;
+        <img src="/static/icons8-pencil-26.png" class="icon-mode-paint"> &nbsp;
+        <img src="/static/icons8-erase-24.png" class="icon-mode-erase">
+    </p>
+{% endblock %}
+
+{% block content %}
+
+<section>
+    <div id="icon-table">
+    </div>
+</section>
+
+<section>
+<h2>Farbauswahl</h2>
+    <p>Aktuelle Farbe:
+         <table><tr><td id="current-color" class="icon-pixel"></td></tr></table>
+    </p>
+    <div id="color-picker">
+    </div>
+    <h2>Vorschau:</h2>
+    <div id="preview">
+        <canvas id="preview-canvas" width="16" height="16"></canvas>
+    </div>
+    <h2>Speichern:</h2>
+    <form id="save" method="post" action="/iconeditor/save">
+        <label for="save-title">Titel (nur Buchstaben und Zahlen): </label>
+        <input type="text" name="title" id="save-title" data-validate="regex:/^[a-zA-Z0-9]+$$/"> <span id="save-title-msg"></span><br>
+        <input type="hidden" id="save-icon" name="icon" value="">
+        <input type="submit">
+    </form>
+</section>
+{% endblock %}

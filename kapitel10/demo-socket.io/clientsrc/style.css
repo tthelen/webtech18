@@ -1,0 +1,36 @@
+body{
+	margin: 0;
+	padding: 0;
+	font: 16px;
+	color: black;
+}
+header, footer{
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: auto;
+	padding: 0 0.5em;
+	background-color: lightgrey;
+	font-size: 24px;
+	line-height: 2em;
+	height: 2em;
+	color: #fff;
+}
+header{
+	font-weight: bold;
+}
+
+footer{
+	top: auto;
+	bottom: 0;
+}
+input{
+	height: 1.5em;
+	font-size: 14px;
+}
+#content{
+	margin: 48px 0.5em;
+	list-style: none;
+}

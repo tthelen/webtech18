@@ -1,0 +1,54 @@
+section {
+    float: left;
+    margin: 2em;
+}
+
+
+/* CSS classes for paint and fill cursors. Additional numbers identify the "hot spot" within the icon. */
+/* Example: 8 8 means: 8 pixels from left and 8 pixels from top */
+.mode-paint {
+        cursor: url('/static/icons8-pencil-26.png') 4 22, default;
+}
+
+.mode-fill {
+        cursor: url('/static/icons8-fill-color-26.png') 24 23, default;
+}
+
+.mode-erase {
+    cursor: url('/static/icons8-erase-24.png') 24 23, default;
+}
+
+.activemode {
+    border: 3px solid red;
+}
+
+.icon-table {
+    border: 1px solid black;
+}
+
+.icon-pixel {
+    width: 1em;
+    height: 1em;
+    border: 1px solid black;
+}
+
+.color-picker-table {
+    border: 1px solid black;
+}
+
+.picker-pixel {
+    width: 0.5em;
+    height: 0.5em;
+    border: 1px solid black;
+}
+
+#preview-canvas {
+    border: 1px black solid;
+    padding: 5px;
+}
+
+.icon-list-item {
+    display: inline;
+    list-style-type: none;
+    padding-right: 10px;
+}

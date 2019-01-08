@@ -1,0 +1,11 @@
+{% extends 'wiki/wiki.tmpl' %}
+
+{% block content %}
+<h1> {{ error }} </h1>
+<div class="wikitext">
+    {{ text|safe }}
+</div>
+<div class="actions">
+    <a href="show">back to main</a>
+</div>
+{% endblock %}

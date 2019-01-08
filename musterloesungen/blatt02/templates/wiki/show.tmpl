@@ -1,0 +1,23 @@
+{% extends 'wiki/wiki.tmpl' %}
+
+{% block content %}
+<h1><img src="{{icon.data}}"> {{ pagename }} </h1>
+<div class="wikitext">
+    {{ text|safe }}
+</div>
+<div class="actions">
+    Recent pages:
+    {% if page_history: %}
+        {% for p in page_history: %}
+            <a href="/show/{{ p }}">{{ p }}</a>
+            {% if not loop.last %}
+                |
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    &middot;
+    <a href="show">back to main</a>
+    &middot;
+    <a href="/edit/{{ pagename }}">Edit</a>
+</div>
+{% endblock %}

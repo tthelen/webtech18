@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}IconWiki{% endblock %}</title>
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:bold' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/static/iconwiki.css">
+    {% block additional_scripts %}{% endblock %}
+</head>
+<body id="body" class="day">
+    <nav>
+    {% set navigation_bar = [
+        ('/', 'wiki', 'Wiki'),
+        ('/iconeditor/', 'iconeditor', 'Icon-Editor'),
+        ('/help/', 'help', 'Hilfe')
+    ] -%}
+    {% set active_page = active_page|default('index') -%}
+
+    <ul>
+        <li><i>ICONwiki</i></li>
+        {% for href, id, caption in navigation_bar %}
+            <li{% if id == active_page %} class="active"{% endif %}>
+                <a href="{{ href }}">{{ caption }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    </nav>
+    <nav class="small">
+        {% block smallnav %}{% endblock %}
+    </nav>
+    <aside>
+        <p><a href="#" id="switch_to_day">Tag</a> | <a href="#" id="switch_to_night">Nacht</a></p>
+        {% block aside %}no content{% endblock %}
+    </aside>
+    <section>
+        {% block content %}no content{% endblock %}
+    </section>
+
+    <script>
+
+        function switch_to_day(event) {
+            document.getElementById("body").classList.remove("night");
+            document.getElementById("body").classList.add("day");
+        }
+
+        function switch_to_night(event) {
+            document.getElementById("body").classList.remove("day");
+            document.getElementById("body").classList.add("night");
+        }
+
+        document.getElementById("switch_to_day").addEventListener("click", switch_to_day);
+        document.getElementById("switch_to_night").addEventListener("click", switch_to_night);
+    </script>
+
+</body>
+</html>

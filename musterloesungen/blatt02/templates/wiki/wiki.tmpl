@@ -1,0 +1,20 @@
+{% extends 'base.tmpl' %}
+{% set active_page = 'wiki' %}
+
+{% block title %} {{ pagename }} {% endblock %}
+
+{% block smallnav %}
+Jump to: <form action="/show" method="GET"><select size=1>
+  {% for p in pagelist %}
+    <option name="p" value={{p.pagename}}>{{p.pagename}}</option>
+  {% endfor %}
+</select> <button type="submit">Go!</button></form>
+{% endblock %}
+
+{% block aside %}
+    <ul>
+        {% for p in pagelist %}
+            <li><a href="/show/{{ p.pagename }}"><img src="{{p.data}}"> {{ p.pagename }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

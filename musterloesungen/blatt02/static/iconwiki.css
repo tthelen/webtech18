@@ -1,0 +1,153 @@
+/* general styles */
+
+/* The sidebar can only fill the entire screen height if the parent element does.
+   So we need 100% height for body and html.
+ */
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+}
+
+/* colors are adjusted by night and day classes on body tag */
+
+body.night {
+    background-color: black;
+    color: white;
+}
+
+body.day {
+    background-color: white;
+    color: black;
+}
+
+/* the day and night switches need an activity indicator
+   we just apply a border if they are part of body.day or body.night respectively
+ */
+body.day #switch_to_day {
+    border: 2px solid black;
+    padding: 5px;
+}
+
+body.night #switch_to_night {
+    border: 2px solid white;
+    padding: 5px;
+}
+
+body.day nav {
+    background-color: #8f7a66;
+    color: white;
+}
+
+body.night nav {
+    background-color: #222222;
+    color: white;
+}
+
+/* the active item in navigation bar */
+body.day .active {
+    background-color: lightgoldenrodyellow;
+}
+
+body.night .active {
+    background-color: #dddddd;
+}
+
+/* Navigation bar on top. */
+nav {
+    top: 0;
+    padding: 10px;
+    width:100%;
+    font-family: "Ubuntu", sans-serif;
+    font-weight: bold;
+}
+
+
+/* Navigation items as list (ul/li) displayes inline (instead of block) */
+nav ul li {
+    display: inline;
+    padding:10px;
+    margin-right:30px;
+}
+
+/* wide screens: show aside and hide smallnav */
+@media (min-width: 1024px) {
+    aside { /* the sidebar */
+        width: 10em;
+        padding: 2em;
+        height: 100%;
+        float: left;
+        margin-right: 2em;
+        font-family: "Ubuntu", sans-serif;
+    }
+
+    body.day aside {
+        background-color: palegoldenrod;
+    }
+
+    body.night aside {
+        background-color: #444444;
+    }
+    aside li {
+        list-style: none;
+        line-height: 200%;
+    }
+    nav.small { /* the sidebar replacement for small screens is not present */
+        display: none;
+    }
+}
+
+/* small screens: hide aside and show smallnav */
+@media (max-width: 1023px) {
+    aside { /* the sidebar is not present */
+        display: none;
+    }
+    nav.small { /* the sidebar replacement for small screens */
+        width: 100%;
+    }
+}
+
+/* no underlining and different colors for links */
+a { text-decoration: none; }
+body.day a:visited { color: black; }
+body.day a:link { color: black; }
+body.night a:visited { color: white; }
+body.night a:link { color: white; }
+
+/* the main content */
+section {
+    font-family: "Vollkorn", sans-serif;
+    margin: 2em;
+}
+
+section > header {
+    font-size: 2em;
+    margin-bottom: 1em;
+    font: 400 2em 'Ubuntu', Helvetica, sans-serif;
+}
+
+article > header {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+/* the footer is below content and sidebar (not floating) */
+footer {
+    clear: both;
+    font-size: 66%;
+    text-align: center;
+}
+
+/* wiki styles */
+.actions {
+	margin: 15px;
+	text-align: right;
+}
+
+.wikiedit {
+	display: block;
+	min-height: 20em;
+	width: 80%;
+}
+
+.wikitext a { text-decoration: underline; }

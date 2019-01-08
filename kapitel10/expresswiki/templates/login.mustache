@@ -1,0 +1,16 @@
+{{> head}}
+
+<h3>{{{message}}}</h3>
+
+<div><i>Default values: admin / admin</i></div>
+
+<form class="pure-form" action="" method="post">
+	<p><label for="username">Username:</label> <input type="text" name="username" id="username"></p>
+	<p><label for="password">Password:</label> <input type="text" name="password" id="password"></p>
+	<button type="submit" class="pure-button pure-button-primary">OK</button>
+
+	<a href="/show"><button class="pure-button">Cancel</button></a>
+
+</form>
+
+{{> foot}}

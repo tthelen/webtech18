@@ -1,0 +1,19 @@
+{% extends 'wiki/wiki.tmpl' %}
+
+{% block content %}
+    <h1>{{ pagename }}</h1>
+    <div class="wikitext">
+        <form action="/save/{{ pagename }}" method="post">
+            <p>Icon:
+                {% for icon in icons: %}
+                    <input id="icon-{{icon.title}}" type="radio" name="icon" value="{{icon.title}}" {% if page_icon.title == icon.title %}checked{% endif %}>
+                    <label for="icon-{{icon.title}}"><img src="{{icon.data}}"></label></input>
+                {% endfor %}
+            <textarea class="wikiedit" name="wikitext">{{ text }}</textarea>
+            <input type="submit" value="save">
+        </form>
+    </div>
+    <div class="actions">
+        <a href="/show/{{ pagename }}">cancel</a>
+    </div>
+{% endblock %}

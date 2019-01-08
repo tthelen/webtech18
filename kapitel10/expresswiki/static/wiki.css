@@ -1,0 +1,36 @@
+.wikitext {
+	background: white;
+	padding: 10px;
+	margin: 10px;
+}
+
+.wikiedit {
+	display: block;
+	min-height: 20em;
+	width: 80%;
+}
+
+.actions {
+	margin: 15px;
+	text-align: right;
+}
+
+.l-box {
+	padding: 2em;
+	background-color: white;
+
+}
+
+.black-box {
+	background-color: black;
+	color: white;
+}
+
+.lightgrey-box {
+	background-color: lightgrey;
+	color: black;
+}
+
+.right-flow {
+	text-align:right;
+}

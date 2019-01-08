@@ -1,0 +1,12 @@
+{{> head}}
+
+<form class="pure-form" action="/save/{{pagename}}" method="post">
+	<textarea class="wikiedit" name="wikitext">{{{text}}}</textarea>
+	<p>
+		<button class="pure-button pure-button-primary" type="submit" value="save">Save</button>
+		&nbsp;
+		<a href="/show/{pagename}"><button class="pure-button" type="button">Cancel</button></a>
+	</p>
+</form>
+
+{{> foot}}

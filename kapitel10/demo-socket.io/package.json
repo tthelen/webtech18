@@ -1,0 +1,20 @@
+{
+	"name": "Node.js-Chat",
+	"description": "Ein einfacher Chat mit Node.js",
+	"author": "Tobias Thelen",
+	"scripts": {
+		"build": "webpack"
+	},
+	"dependencies": {
+		"css-loader": "latest",
+		"express": "latest",
+		"jquery": "latest",
+		"socket.io": "latest",
+		"sprintf-js": "latest",
+		"style-loader": "latest"
+	},
+	"devDependencies": {
+		"webpack": "latest",
+		"webpack-cli": "^3.2.1"
+	}
+}
