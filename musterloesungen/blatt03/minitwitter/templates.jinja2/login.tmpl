@@ -1,0 +1,15 @@
+{% extends 'skel.tmpl'%}
+
+{% block content %}
+<h2>Bitte einloggen</h2>
+<p>Benutzer: admin, user1, user2 (Passwort=Benutzername)</p>
+<form action="/login" method="post" class="pure-form pure-form-stacked">
+    <fieldset>
+        <input type=hidden name="csrf_token" value="{{ session.csrf_token }}">
+        <label for="username">Benutzername:</label> <input type="text" name="_username" id="username"> <br>
+        <label for="password">Passwort:</label>  <input type="password" name="_password" id="password"> <br>
+        &nbsp;<br>
+        <button class="pure-button button-secondary" type="submit">Login</button>
+    </fieldset>
+</form>
+{% endblock %}

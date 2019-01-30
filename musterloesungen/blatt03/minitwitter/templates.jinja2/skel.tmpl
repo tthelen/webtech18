@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <title>MiniTwitter &middot; Start</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
+    <link href="/static/minitwitter.css" rel="stylesheet">
+    <script src="/static/minitwitter.js"></script>
+</head>
+
+<body>
+
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header">
+            <h1 class="brand-title">Buggy MiniTwitter</h1>
+            <h2 class="brand-tagline">It's full of surprising bugs.</h2>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a class="pure-button" href="/">Home</a>
+                    </li>
+                    {% if not user.is_authenticated: %}
+                          <li class="nav-item"><a class="pure-button" href="/login">Login</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <p>&nbsp;</p>
+
+            {% if user.is_authenticated: %}
+               <h2 class="brand-tagline">New Tweet</h1>
+
+                <form class="pure-form" method="POST" id="theform" action="/">
+                    <p>
+                    <input type="text" name="status" id="status" placeholder="Right now, in my life..." size=40 class="tweeter">
+                    <input type=hidden name="csrf_token" value="{{ session.csrf_token }}">
+                    </p>
+                    <button type="submit" class="pure-button button-primary">Post it!</button>
+                </form>
+            {% endif %}
+
+                <p>&nbsp; </p>
+            <nav class="nav">
+                <ul class="nav-list">
+                    {% if user.is_authenticated: %}
+                          <span class="pure-menu-heading">Logged in as {{fullname}}</span>
+                          <li class="nav-item"> <a class="pure-button" href="/logout">Logout</a></li>
+                    {% endif %}
+                    {% if user.is_admin: %}
+                          <li class="nav-item"><a class="pure-button" href="/useradmin">User Administration</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+
+        </div>
+    </div>
+
+    <div class="content pure-u-1 pure-u-md-3-4" id="content-row">
+
+    {% block content %} no content {% endblock %}
+
+    </div>
+
+</div>
+</body>
+</html>

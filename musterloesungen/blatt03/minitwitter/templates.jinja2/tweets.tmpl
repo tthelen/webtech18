@@ -1,0 +1,16 @@
+{% if message %}
+   <aside><p>{{ message }}</p></aside>
+{% endif %}
+
+<h1 class="content-subhead">The Tweets</h1>
+
+{% for tweet in tweets: %}
+    <section class="post">
+       <header class="post-header">
+            <img alt="Some avatar" class="post-avatar" src="https://api.adorable.io/avatars/48/{{tweet.author}}.png" width="48" height="48">
+            <h2 class="post-title">{{tweet.tweet}}</h2>
+            <p class="post-meta">By {{tweet.author}} on {{tweet.date}}</p>
+        </header>
+        <div class="post-description"><p>&nbsp;</p></div>
+    </section>
+{% endfor %}

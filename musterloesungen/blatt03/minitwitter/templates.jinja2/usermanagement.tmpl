@@ -1,0 +1,59 @@
+{% extends 'skel.tmpl' %}
+
+{% block content %}
+
+    {% if message %}
+       <aside><p>{{ message }}</p></aside>
+    {% endif %}
+
+	<h1>User Management</h1>
+	<table class="pure-table">
+	    <thead>
+    	    <tr>
+    	        <th>Username</th>
+    	        <th>Full name</th>
+    	        <th>Role</th>
+    	        <th>Password</th>
+    	        <th>Action</th>
+            </tr>
+        </thead>
+
+        {% for user in userlist: %}
+	    	<tr id='row-del-{{user.username}}'>
+			<td>{{user.username}}</td>
+			<td>{{user.fullname}}</td>
+			<td>{{user.role}}</td>
+			<td>{{user.password}}</td>
+			<td><button role="button" class="delete-button" data-delusername="{{user.username}}">Löschen</button></td>
+			</tr>
+		{% endfor %}
+
+	</table>
+
+    <p>&nbsp;</p>
+
+	<h2>Create new user</h2>
+
+	<form action="useradmin/create" method="post" class="pure-form pure-form-stacked" id="create_form">
+		<fieldset>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="">
+
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" value="">
+
+            <label for="username">Permissions:</label>
+            <select size=0 name="role">
+                <option name="user" value="user">user</option>
+                <option name="admin" value="admin">admin</option>
+            </select>
+
+            <label for="username">Full Name:</label>
+            <input type="text" id="fullname" name="fullname" size=40>
+
+            <input type=hidden name="csrf_token" value="{{ session.csrf_token }}">
+            <button type="submit" value="save" class="pure-button button-primary">Create user</button>
+		</fieldset>
+	</form>
+
+{% endblock %}
